@@ -1,0 +1,52 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A simple app</title>
+    <script>
+        window.onload = async () => {
+            let btnConvert = document.getElementById('convert')
+            let data
+            let response
+            
+            btnConvert.onclick = () => {
+                convert()
+            }
+
+            let load = async () => {
+                try {
+                     response = await fetch(`/profile.json`)
+                     data = await response.json();
+
+                    let div = document.getElementById("content");
+                    for (let elem in data) {
+                        let p = document.createElement('p')
+                        p.innerText = data[elem]
+                        p.setAttribute('id', elem)
+                        div.append(p)
+                    }
+                }
+                catch (err) {
+                    console.warn(err)
+                }
+            }
+
+            let convert = () => {
+                let p=document.getElementById("instagram")
+                let value=(parseInt(p.innerText)/1000000)
+                let newP=value+"M"
+                p.innerText=newP;
+            }
+           
+            load()
+        }
+
+            
+    </script>
+</head>
+<body>
+    <h1>Profil influencer</h1>
+    <div id="content"></div>
+    <input type="button" value="convert" id="convert" onclick="convert()" />
+</body>
+</html>

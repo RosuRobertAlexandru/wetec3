@@ -1,0 +1,30 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A simple app</title>
+    <script>
+        window.onload=()=>{
+            let btn=document.getElementById("load")
+            btn.addEventListener("click",()=>{
+                load()
+            })
+
+            load=async()=>{
+                let response = await fetch("http://localhost:8080/cars")
+                let respJson = await response.json()
+                let data = respJson;
+                let cont=data.filter(e=>e.color=='red').map(e=>`<tr><td>${e.name}</td></tr>`)
+                document.getElementById('main').innerHTML=cont.join('')
+
+            }
+        }
+ 
+    </script>
+</head>
+<body>
+    A simple app
+    <table id=main></table>
+    <button id="load">Load</button>
+</body>
+</html>
